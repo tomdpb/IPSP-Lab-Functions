@@ -1,5 +1,8 @@
 from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
+from matplotlib import rcParams
+
+rcParams.update({'figure.autolayout': True})
 
 
 def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
