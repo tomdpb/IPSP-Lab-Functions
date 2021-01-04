@@ -34,6 +34,7 @@ def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
     pars, _ = curve_fit(f=function, xdata=x_values, ydata=data)
     #                    bounds=(data[0], data[-1]))
     fig, ax = plt.subplots(dpi=200)
+    plt.tight_layout()
     ax.plot(x_values, data, ".", label="Data")
     ax.plot(x_values, function(x_values, *pars), label="Curve Fit")
     ax.set(title=title, xlabel=x_label, ylabel=y_label)
@@ -42,6 +43,6 @@ def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
 
     if save:
         file_name = str(title) + ".png"
-        plt.savefig(file_name)
+        fig.savefig(file_name)
 
     return pars
