@@ -6,7 +6,7 @@ rcParams.update({'figure.autolayout': True})
 
 
 def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
-        save=False):
+        save_plot=False):
     """Curve fit parameters
     - takes your data
     - fits it to a function of your choice
@@ -41,7 +41,7 @@ def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
     ax.legend()
     plt.grid()
 
-    if save:
+    if save_plot:
         file_name = str(title) + ".png"
         fig.savefig(file_name)
 
