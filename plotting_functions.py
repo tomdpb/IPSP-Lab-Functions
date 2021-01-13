@@ -1,4 +1,4 @@
-def fit(x_values, data, function, Title, ax="fig", imgname="jk", guesses=[1,1], 
+def fit(x_values, data, function, title, ax="fig", imgname="jk", guesses=[1,1], 
         xLabel= "x (unit of x)", yLabel="y (unit of y)"):
     """Curve fit function
     - takes your data 
@@ -40,7 +40,7 @@ def fit(x_values, data, function, Title, ax="fig", imgname="jk", guesses=[1,1],
         ax  = plt.axes()
     ax.plot(x_values,data ,".", ms=2, label="data")
     ax.plot(x_values,function(x_values,*pars),label="curve fit")
-    ax.set(title=Title, xlabel= xLabel, ylabel= yLabel) 
+    ax.set(title=title, xlabel= xLabel, ylabel= yLabel) 
     ax.legend()
     if ax == "fig":
         if imgname != "jk" :
