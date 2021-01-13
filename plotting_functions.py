@@ -34,13 +34,12 @@ def fit(x_values, data, function, xlabel="X", ylabel="Y", title="Title",
     """
     pars, pcov = curve_fit(f=function, xdata=x_values, ydata=data, p0=guesses)
     #                    bounds=(data[0], data[-1]))
-    fig, ax = plt.subplots(dpi=200)
-    plt.tight_layout()
+    fig, ax = plt.subplots(dpi=200, tight_layout=True)
     ax.plot(x_values, data, ".", label="Data")
     ax.plot(x_values, function(x_values, *pars), label="Curve Fit")
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
     ax.legend()
-    plt.grid()
+    ax.grid(True)
 
     if save_plot:
         file_name = str(title) + ".png"
