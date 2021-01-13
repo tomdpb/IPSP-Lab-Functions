@@ -34,7 +34,7 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
                     depending on n you might have to be very good at guessing
         x_label:	str, the label of the x axis of your plot
         y_label:	str, the label of the y axis of your plot
-        pnt_size:   float, markersize of your data points
+        pnt_size:   float, marker size of your data points
         line_size:  float, marker size of the fit line
 
     Returns:
