@@ -1,5 +1,5 @@
 def fit(x_values, data, function, title, ax="fig", imgname="jk", guesses=[1,1], 
-        xLabel= "x (unit of x)", yLabel="y (unit of y)"):
+        xLabel= "x (unit of x)", yLabel="y (unit of y)", ms=3):
     """Curve fit function
     - takes your data 
     - fits it to a function of your choice 
@@ -17,7 +17,7 @@ def fit(x_values, data, function, title, ax="fig", imgname="jk", guesses=[1,1],
                     to be used in a figure enviroment 
                         pars2 = fit
                     ex: FunFig, (ax1, ax2) = plt.subplots(2,1)
-                        pars1 = fit(x, y, linear, "cool", ax = ax1)(
+                        pars1 = fit(x, y, linear, "cool", ax = ax1)
                         pars2 = fit(x, y2, exponential, "nice", ax = ax2)
         imgname:    str, if changed this is the name of the saved image .png
         guesses:    array , guesses for your initial values 
@@ -25,7 +25,8 @@ def fit(x_values, data, function, title, ax="fig", imgname="jk", guesses=[1,1],
                     watch out with putting 0 --> 1/0 = problem
                     depending on n you might have to be very good at guessing
         x_label:	str, the label of the x axis of your plot
-        y_label:	str, the label of the y axis of your plot           
+        y_label:	str, the label of the y axis of your plot  
+        ms:         float, markersize of your data points
     
     Returns: 
         array of parameters with standart error
@@ -38,9 +39,9 @@ def fit(x_values, data, function, title, ax="fig", imgname="jk", guesses=[1,1],
     if ax == "fig":
         fig = plt.figure(tight_layout=True ,dpi=200)
         ax  = plt.axes()
-    ax.plot(x_values,data ,".", ms=2, label="data")
+    ax.plot(x_values,data ,".", ms=ms, label="data")
     ax.plot(x_values,function(x_values,*pars),label="curve fit")
-    ax.set(title=title, xlabel= xLabel, ylabel= yLabel) 
+    ax.set(title=title, xlabel=xLabel, ylabel=yLabel) 
     ax.legend()
     if ax == "fig":
         if imgname != "jk" :
