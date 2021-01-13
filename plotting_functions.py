@@ -1,7 +1,7 @@
 from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
 from numpy import inf, sqrt, diag
-from uncertainties import unumpy as unp
+from uncertainties.unumpy import uarray
 
 
 def fit(x_values, y_values, function, title, ax=False, save_plot=False,
@@ -58,7 +58,7 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
     ax.legend()
 
     std = sqrt(diag(cov))
-    parameters = unp.uarray(pars, std)
+    parameters = uarray(pars, std)
 
     if save_plot:
         file_name = str(title) + ".png"
