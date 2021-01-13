@@ -5,8 +5,8 @@ from matplotlib import rcParams
 rcParams.update({'figure.autolayout': True})
 
 
-def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
-        save_plot=False):
+def fit(x_values, data, function, xlabel="X", ylabel="Y", title="Title",
+        guesses=None, save_plot=False):
     """Curve fit parameters
     - takes your data
     - fits it to a function of your choice
@@ -17,13 +17,14 @@ def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
         data:       array, your y values
         function:   a self defined function of possibly multiple parameters
                     in the form f(x,a1,a2,...an) with n = number of parameters
-        ax:         the actual plot
-                    limits, y and x labels adjustable in ax.set
-                    names of lines adjustable
-        title:     str, the title of your plot
-        x_label:	str, the label of the x axis of your plot
-        y_label:	str, the label of the y axis of your plot
-        save:		bool, optional, determines whether or not to save your plot
+        title:      str, the title of your plot
+        xlabel:	    str, the label of the x axis of your plot
+        ylabel:	    str, the label of the y axis of your plot
+        guesses:    array, guesses for your initial values
+                    when in doubt put an array of ones of size n
+                    watch out with putting 0 --> 1/0 = problem
+                    depending on n you might have to be very good at guessing
+        save_plot:	bool, optional, determines whether or not to save your plot
                     as a .png file
 
     Returns:
@@ -31,13 +32,13 @@ def fit(x_values, data, function, x_label="X", y_label="Y", title="Title",
         window if your IDE supports it.
 
     """
-    pars, _ = curve_fit(f=function, xdata=x_values, ydata=data)
+    pars, pcov = curve_fit(f=function, xdata=x_values, ydata=data, p0=guesses)
     #                    bounds=(data[0], data[-1]))
     fig, ax = plt.subplots(dpi=200)
     plt.tight_layout()
     ax.plot(x_values, data, ".", label="Data")
     ax.plot(x_values, function(x_values, *pars), label="Curve Fit")
-    ax.set(title=title, xlabel=x_label, ylabel=y_label)
+    ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
     ax.legend()
     plt.grid()
 
