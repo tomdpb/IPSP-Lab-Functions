@@ -5,7 +5,8 @@ from uncertainties import unumpy as unp
 
 
 def fit(x_values, y_values, function, title, ax=False, save_plot=False,
-        guesses=[1, 1], xlabel="x (unit of x)", ylabel="y (unit of y)", ms=3):
+        guesses=[1, 1], xlabel="x (unit of x)", ylabel="y (unit of y)",
+        pnt_size=3, line_size=3):
     """Curve fit function
     - takes your data
     - fits it to a function of your choice
@@ -33,7 +34,8 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
                     depending on n you might have to be very good at guessing
         x_label:	str, the label of the x axis of your plot
         y_label:	str, the label of the y axis of your plot
-        ms:         float, markersize of your data points
+        pnt_size:   float, markersize of your data points
+        line_size:  float, marker size of the fit line
 
     Returns:
         array of parameters with standart error
@@ -49,8 +51,8 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
         fig = plt.figure(tight_layout=True, dpi=200)
         ax = plt.axes()
 
-    ax.plot(x_values, y_values, ".", ms=ms, label="Data")
-    ax.plot(x_values, function(x_values, *pars), label="Fit")
+    ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
+    ax.plot(x_values, function(x_values, *pars), ms=line_size, label="Fit")
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
     ax.grid(True)
     ax.legend()
