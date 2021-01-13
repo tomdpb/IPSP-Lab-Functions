@@ -4,7 +4,7 @@ from numpy import inf, sqrt, diag
 from uncertainties import unumpy as unp
 
 
-def fit(x_values, y_values, function, title, ax=None, save_plot=False,
+def fit(x_values, y_values, function, title, ax=False, save_plot=False,
         guesses=[1, 1], xlabel="x (unit of x)", ylabel="y (unit of y)", ms=3):
     """Curve fit function
     - takes your data
@@ -14,12 +14,12 @@ def fit(x_values, y_values, function, title, ax=None, save_plot=False,
     - spits out your curve fit parameters
 
     Parameters:
-        x_values:   array , your x values
-        y_values:   array , your y values
+        x_values:   array, your x values
+        y_values:   array, your y values
         function:   a self defined function of possibly multiple parameters
                     in the form f(x,a1,a2,...an) with n = number of parameters
-        title:      string , the title of your plot
-        ax:         (if changed) matplotlib.axes._subplots.AxesSubplot
+        title:      string, the title of your plot
+        ax:         opt, matplotlib.axes._subplots.AxesSubplot
                     to be used in a figure enviroment
                         pars2 = fit
                     ex: FunFig, (ax1, ax2) = plt.subplots(2, 1)
@@ -41,6 +41,7 @@ def fit(x_values, y_values, function, title, ax=None, save_plot=False,
         for further documentation look up the uncertainies package
 
     """
+
     pars, cov = curve_fit(f=function, xdata=x_values, ydata=y_values,
                           p0=guesses, bounds=(-inf, inf))
 
@@ -48,16 +49,17 @@ def fit(x_values, y_values, function, title, ax=None, save_plot=False,
         fig = plt.figure(tight_layout=True, dpi=200)
         ax = plt.axes()
 
-    if save_plot:
-        file_name = str(title) + ".png"
-        fig.savefig(file_name)
-
     ax.plot(x_values, y_values, ".", ms=ms, label="Data")
     ax.plot(x_values, function(x_values, *pars), label="Fit")
     ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
+    ax.grid(True)
     ax.legend()
 
     std = sqrt(diag(cov))
     parameters = unp.uarray(pars, std)
+
+    if save_plot:
+        file_name = str(title) + ".png"
+        fig.savefig(file_name)
 
     return parameters
