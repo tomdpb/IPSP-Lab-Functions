@@ -5,7 +5,7 @@ from uncertainties import unumpy as unp
 
 
 def fit(x_values, y_values, function, title, ax=False, save_plot=False,
-        guesses=[1, 1], xlabel="x (unit of x)", ylabel="y (unit of y)",
+        guesses=[1, 1], x_label="x (unit of x)", y_label="y (unit of y)",
         pnt_size=3, line_size=3):
     """Curve fit function
     - takes your data
@@ -53,7 +53,7 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
 
     ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
     ax.plot(x_values, function(x_values, *pars), ms=line_size, label="Fit")
-    ax.set(title=title, xlabel=xlabel, ylabel=ylabel)
+    ax.set(title=title, xlabel=x_label, ylabel=y_label)
     ax.grid(True)
     ax.legend()
 
