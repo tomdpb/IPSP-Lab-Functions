@@ -6,7 +6,7 @@ from uncertainties.unumpy import uarray
 
 def fit(x_values, y_values, function, title, ax=False, save_plot=False,
         guesses=[1, 1], x_label="x (unit of x)", y_label="y (unit of y)",
-        pnt_size=3, line_size=3):
+        pnt_size=3, line_size=3, log_scale=None):
     """Curve fit function
     - takes your data
     - fits it to a function of your choice
@@ -36,6 +36,8 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
         y_label:	str, the label of the y axis of your plot
         pnt_size:   float, marker size of your data points
         line_size:  float, marker size of the fit line
+        log_scale:  str, allows you to choose which axis to have a logarithmic
+                    scale. Leaving it blank will plot it with a linear axis.
 
     Returns:
         array of parameters with standart error
@@ -54,6 +56,18 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
     ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
     ax.plot(x_values, function(x_values, *pars), ms=line_size, label="Fit")
     ax.set(title=title, xlabel=x_label, ylabel=y_label)
+
+    if log_scale:
+        if log_scale == "x":
+            plt.xscale("log")
+
+        if log_scale == "y":
+            plt.yscale("log")
+
+        if log_scale == "both":
+            plt.xscale("log")
+            plt.yscale("log")
+
     ax.grid(True)
     ax.legend()
 
