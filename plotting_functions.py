@@ -61,10 +61,10 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
         if log_scale == "x":
             plt.xscale("log")
 
-        if log_scale == "y":
+        elif log_scale == "y":
             plt.yscale("log")
 
-        if log_scale == "both":
+        elif log_scale == "both":
             plt.xscale("log")
             plt.yscale("log")
 
