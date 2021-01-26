@@ -67,6 +67,8 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
         elif log_scale == "both":
             plt.xscale("log")
             plt.yscale("log")
+        else:
+            raise ValueError(f"log_scale={log_scale} is not a valid argument")
 
     ax.grid(True)
     ax.legend()
