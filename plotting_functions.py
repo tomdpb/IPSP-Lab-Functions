@@ -12,7 +12,7 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
     - fits it to a function of your choice
     - gives you a plot of your data as scatter points and a curve fit line
       (possibly to be used in a multiplot)
-    - spits out your curve fit parameters
+    - returns your curve fit parameters
 
     Parameters:
         x_values:   array, your x values
@@ -40,7 +40,7 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
                     scale. Leaving it blank will plot it with a linear axis.
 
     Returns:
-        array of parameters with standart error
+        array of parameters with standard error
         CAUTION! calculations like np.sin may not be performed on this
         for further documentation look up the uncertainies package
 
