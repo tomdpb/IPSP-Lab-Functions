@@ -4,9 +4,9 @@ from numpy import inf, sqrt, diag
 from uncertainties.unumpy import uarray
 
 
-def fit(x_values, y_values, function, y_errors=None, ax=False, save_plot=False,
-        guesses=None, title=None, x_label=None, y_label=None, pnt_size=3,
-        line_size=3, log_scale=None, scientific_notation=None):
+def fit(x_values, y_values, function, y_errors=None, ax=False, guesses=None,
+        title=None, x_label=None, y_label=None, pnt_size=3, line_size=3,
+        log_scale=None, scientific_notation=None, save_plot=False):
     """Curve fit function
     - takes your data
     - fits it to a function of your choice
