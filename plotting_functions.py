@@ -4,9 +4,9 @@ from numpy import inf, sqrt, diag
 from uncertainties.unumpy import uarray
 
 
-def fit(x_values, y_values, function, title, ax=False, save_plot=False,
-        guesses=[1, 1], x_label="x (unit of x)", y_label="y (unit of y)",
-        pnt_size=3, line_size=3, log_scale=None):
+def fit(x_values, y_values, function, y_errors=None, title=None, ax=False,
+        save_plot=False, guesses=None, x_label=None, y_label=None,
+        pnt_size=3, line_size=3, log_scale=None, scientific_notation=None):
     """Curve fit function
     - takes your data
     - fits it to a function of your choice
@@ -15,29 +15,32 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
     - returns your curve fit parameters
 
     Parameters:
-        x_values:   array, your x values
-        y_values:   array, your y values
-        function:   a self defined function of possibly multiple parameters
-                    in the form f(x,a1,a2,...an) with n = number of parameters
-        title:      string, the title of your plot
-        ax:         opt, matplotlib.axes._subplots.AxesSubplot
-                    to be used in a figure enviroment
-                        pars2 = fit
-                    ex: FunFig, (ax1, ax2) = plt.subplots(2, 1)
-                        pars1 = fit(x, y, linear, "cool", ax = ax1)
-                        pars2 = fit(x, y2, exponential, "nice", ax = ax2)
-        save_plot:  bool, if given, saves the figure using the name given by
-                    the 'title' variable.
-        guesses:    array , guesses for your initial values
-                    when in doubt put an array of ones of size n
-                    watch out with putting 0 --> 1/0 = problem
-                    depending on n you might have to be very good at guessing
-        x_label:	str, the label of the x axis of your plot
-        y_label:	str, the label of the y axis of your plot
-        pnt_size:   float, marker size of your data points
-        line_size:  float, marker size of the fit line
-        log_scale:  str, allows you to choose which axis to have a logarithmic
-                    scale. Leaving it blank will plot it with a linear axis.
+        x_values:       array, your x values.
+        y_values:       array, your y values.
+        function:       a self defined function of possibly multiple parameters
+                        in the form f(x,a1,a2,...an) with n = number of
+                        parameters.
+        y_errors:       array, errors in the y_values.
+        title:          string, the title of your plot.
+        ax:             opt, matplotlib.axes._subplots.AxesSubplot
+                        to be used in a figure enviroment
+                            pars2 = fit
+                            ex: FunFig, (ax1, ax2) = plt.subplots(2, 1)
+                            pars1 = fit(x, y, linear, "cool", ax = ax1)
+                            pars2 = fit(x, y2, exponential, "nice", ax = ax2)
+        save_plot:      bool, if given, saves the figure using the name given
+                        by the 'title' variable.
+        guesses:        array , guesses for your initial values.
+        x_label:	    str, the label of the x axis of your plot.
+        y_label:	    str, the label of the y axis of your plot.
+        pnt_size:       float, marker size of your data points.
+        line_size:      float, marker size of the fit line.
+        log_scale:      str, allows you to choose which axis to have a
+                        logarithmic scale. Leaving it blank will plot it with
+                        a linear axis.
+        scientific_notation:
+                        str, allows you to choose which axis should be plotted
+                        with the scientific notation.
 
     Returns:
         array of parameters with standard error
@@ -47,7 +50,7 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
     """
 
     pars, cov = curve_fit(f=function, xdata=x_values, ydata=y_values,
-                          p0=guesses, bounds=(-inf, inf))
+                          p0=guesses, sigma=y_errors, bounds=(-inf, inf))
 
     if not ax:
         fig = plt.figure(tight_layout=True, dpi=200)
@@ -69,6 +72,19 @@ def fit(x_values, y_values, function, title, ax=False, save_plot=False,
             plt.yscale("log")
         else:
             raise ValueError(f"log_scale={log_scale} is not a valid argument")
+
+    if scientific_notation:
+        if scientific_notation == "x":
+            ax.ticklabel_format(style="sci", axis="x", scilimits=(0, 0))
+
+        elif scientific_notation == "y":
+            ax.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+
+        elif scientific_notation == "both":
+            ax.ticklabel_format(style="sci", axis="both", scilimits=(0, 0))
+        else:
+            raise ValueError(f"scientific_notation={scientific_notation} is "
+                             "not a valid argument")
 
     ax.grid(True)
     ax.legend()
