@@ -4,48 +4,51 @@ from numpy import inf, sqrt, diag
 from uncertainties.unumpy import uarray
 
 
-def fit(x_values, y_values, function, y_errors=None, ax=False, guesses=None,
+def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
         title=None, x_label=None, y_label=None, pnt_size=3, line_size=3,
-        log_scale=None, scientific_notation=None, save_plot=False):
+        log_scale=None, scientific_notation=None, save_plot=False,
+        show_plot=True):
     """Curve fit function
-    - takes your data
-    - fits it to a function of your choice
+    - takes data and fits it to a given function.
     - gives you a plot of your data as scatter points and a curve fit line
       (possibly to be used in a multiplot)
     - returns your curve fit parameters
 
     Parameters:
-        x_values:       array, your x values.
-        y_values:       array, your y values.
+        x_values:       array; your x values.
+        y_values:       array; your y values.
         function:       a self defined function of possibly multiple parameters
-                        in the form f(x,a1,a2,...an) with n = number of
+                        in the form f(x, a1, a2, ..., an) with n = number of
                         parameters.
-        y_errors:       array, errors in the y_values.
-        title:          string, the title of your plot.
+        y_errors:       opt, array; errors in the y_values.
+        guesses:        opt, array; guesses for your parameters.
         ax:             opt, matplotlib.axes._subplots.AxesSubplot
                         to be used in a figure enviroment
                             pars2 = fit
-                            ex: FunFig, (ax1, ax2) = plt.subplots(2, 1)
+                            ex: Fig, (ax1, ax2) = plt.subplots(2, 1)
                             pars1 = fit(x, y, linear, "cool", ax = ax1)
                             pars2 = fit(x, y2, exponential, "nice", ax = ax2)
-        save_plot:      bool, if given, saves the figure using the name given
-                        by the 'title' variable.
-        guesses:        array , guesses for your initial values.
-        x_label:	    str, the label of the x axis of your plot.
-        y_label:	    str, the label of the y axis of your plot.
-        pnt_size:       float, marker size of your data points.
-        line_size:      float, marker size of the fit line.
-        log_scale:      str, allows you to choose which axis to have a
+        title:          opt, str; the title of your plot.
+        x_label:	    opt, str; the label of the x axis of your plot.
+        y_label:	    opt, str; the label of the y axis of your plot.
+        pnt_size:       opt, float; marker size of your data points.
+        line_size:      opt, float; marker size of the fit line.
+        log_scale:      opt, str; allows you to choose which axis to have a
                         logarithmic scale. Leaving it blank will plot it with
                         a linear axis.
         scientific_notation:
-                        str, allows you to choose which axis should be plotted
-                        with the scientific notation.
+                        opt, str; allows you to choose which axis should be
+                        plotted with the scientific notation.
+        save_plot:      opt, bool; if given, saves the figure using the name
+                        given by the 'title' variable.
+        show_plot:      opt, bool; if given, shows the plot. Note that if this
+                        function isn't assigned to a variable, some
+                        environments might show the plot regardless.
 
     Returns:
         array of parameters with standard error
         CAUTION! calculations like np.sin may not be performed on this
-        for further documentation look up the uncertainies package
+        for further documentation look up the uncertainties package
 
     """
 
@@ -55,7 +58,7 @@ def fit(x_values, y_values, function, y_errors=None, ax=False, guesses=None,
     if not ax:
         fig = plt.figure(tight_layout=True, dpi=200)
         ax = plt.axes()
-
+	# TODO allow using functions such as np.sin instead of having to first define them
     ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
     ax.plot(x_values, function(x_values, *pars), ms=line_size, label="Fit")
     ax.set(title=title, xlabel=x_label, ylabel=y_label)
@@ -95,5 +98,8 @@ def fit(x_values, y_values, function, y_errors=None, ax=False, guesses=None,
     if save_plot:
         file_name = str(title) + ".png"
         fig.savefig(file_name)
+
+    if show_plot:
+        plt.show()
 
     return parameters
