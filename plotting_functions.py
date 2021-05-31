@@ -6,7 +6,7 @@ from uncertainties.unumpy import uarray
 
 def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
         title=None, x_label=None, y_label=None, pnt_size=3, line_size=3,
-        log_scale=None, scientific_notation=None, save_plot=False,
+        log_scale=None, scientific_notation=None, dpi=200, save_plot=False,
         show_plot=True):
     """Curve fit function
     - takes data and fits it to a given function.
@@ -39,6 +39,9 @@ def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
         scientific_notation:
                         opt, str; allows you to choose which axis should be
                         plotted with the scientific notation.
+        dpi:
+        				opt, int; if given, determines the pixel density of the
+        				plot, and therefore its quality.
         save_plot:      opt, bool; if given, saves the figure using the name
                         given by the 'title' variable.
         show_plot:      opt, bool; if given, shows the plot. Note that if this
@@ -56,7 +59,7 @@ def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
                           p0=guesses, sigma=y_errors, bounds=(-inf, inf))
 
     if not ax:
-        fig = plt.figure(tight_layout=True, dpi=200)
+        fig = plt.figure(tight_layout=True, dpi=dpi)
         ax = plt.axes()
 	# TODO allow using functions such as np.sin instead of having to first define them
     ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
