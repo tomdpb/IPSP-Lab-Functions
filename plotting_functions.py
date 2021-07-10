@@ -96,10 +96,11 @@ def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
                 raise ValueError(f"scientific_notation={scientific_notation} is "
                                  "not a valid argument")
 
-        ax.grid(True)
-        ax.legend()
+        
 
         if show_plot:
+        	ax.grid(True)
+        	ax.legend()
             plt.show()
 
         if save_plot:
