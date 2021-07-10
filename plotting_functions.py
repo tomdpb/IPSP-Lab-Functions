@@ -29,8 +29,8 @@ def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
                             pars1 = fit(x, y, linear, "cool", ax = ax1)
                             pars2 = fit(x, y2, exponential, "nice", ax = ax2)
         title:          opt, str; the title of your plot.
-        x_label:	    opt, str; the label of the x axis of your plot.
-        y_label:	    opt, str; the label of the y axis of your plot.
+        x_label:        opt, str; the label of the x axis of your plot.
+        y_label:        opt, str; the label of the y axis of your plot.
         pnt_size:       opt, float; marker size of your data points.
         line_size:      opt, float; marker size of the fit line.
         log_scale:      opt, str; allows you to choose which axis to have a
@@ -40,8 +40,8 @@ def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
                         opt, str; allows you to choose which axis should be
                         plotted with the scientific notation.
         dpi:
-        				opt, int; if given, determines the pixel density of the
-        				plot, and therefore its quality.
+                        opt, int; if given, determines the pixel density of the
+                        plot, and therefore its quality.
         save_plot:      opt, bool; if given, saves the figure using the name
                         given by the 'title' variable.
         show_plot:      opt, bool; if given, shows the plot. Note that if this
@@ -58,51 +58,67 @@ def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
     pars, cov = curve_fit(f=function, xdata=x_values, ydata=y_values,
                           p0=guesses, sigma=y_errors, bounds=(-inf, inf))
 
-    if not ax:
-        fig = plt.figure(tight_layout=True, dpi=dpi)
-        ax = plt.axes()
-	# TODO allow using functions such as np.sin instead of having to first define them
-    ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
-    ax.plot(x_values, function(x_values, *pars), ms=line_size, label="Fit")
-    ax.set(title=title, xlabel=x_label, ylabel=y_label)
-
-    if log_scale:
-        if log_scale == "x":
-            plt.xscale("log")
-
-        elif log_scale == "y":
-            plt.yscale("log")
-
-        elif log_scale == "both":
-            plt.xscale("log")
-            plt.yscale("log")
-        else:
-            raise ValueError(f"log_scale={log_scale} is not a valid argument")
-
-    if scientific_notation:
-        if scientific_notation == "x":
-            ax.ticklabel_format(style="sci", axis="x", scilimits=(0, 0))
-
-        elif scientific_notation == "y":
-            ax.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
-
-        elif scientific_notation == "both":
-            ax.ticklabel_format(style="sci", axis="both", scilimits=(0, 0))
-        else:
-            raise ValueError(f"scientific_notation={scientific_notation} is "
-                             "not a valid argument")
-
-    ax.grid(True)
-    ax.legend()
-
     std = sqrt(diag(cov))
     parameters = uarray(pars, std)
 
-    if save_plot:
-        file_name = str(title) + ".png"
-        fig.savefig(file_name)
+    if show_plot or save_plot:
+        if not ax:
+            plt.figure(tight_layout=True, dpi=dpi)
+            ax = plt.axes()
+        # TODO allow using functions such as np.sin instead of having to first define them
+        ax.plot(x_values, y_values, ".", ms=pnt_size, label="Data")
+        ax.plot(x_values, function(x_values, *pars), ms=line_size, label="Fit")
+        ax.set(title=title, xlabel=x_label, ylabel=y_label)
 
-    if show_plot:
-        plt.show()
+        if log_scale:
+            if log_scale == "x":
+                plt.xscale("log")
+
+            elif log_scale == "y":
+                plt.yscale("log")
+
+            elif log_scale == "both":
+                plt.xscale("log")
+                plt.yscale("log")
+            else:
+                raise ValueError(f"log_scale={log_scale} is not a valid argument")
+
+        if scientific_notation:
+            if scientific_notation == "x":
+                ax.ticklabel_format(style="sci", axis="x", scilimits=(0, 0))
+
+            elif scientific_notation == "y":
+                ax.ticklabel_format(style="sci", axis="y", scilimits=(0, 0))
+
+            elif scientific_notation == "both":
+                ax.ticklabel_format(style="sci", axis="both", scilimits=(0, 0))
+            else:
+                raise ValueError(f"scientific_notation={scientific_notation} is "
+                                 "not a valid argument")
+
+        ax.grid(True)
+        ax.legend()
+
+        if show_plot:
+            plt.show()
+
+        if save_plot:
+            file_name = str(title) + ".png"
+            plt.savefig(file_name)
+
 
     return parameters
+
+
+
+def linear(x, a, b):
+	return a*x + b
+
+
+def exponential(x, a, b, c):
+    return a*exp(x*b + c)
+
+
+def parabola(x, a, b, c):
+    return a*x**2 + b*x + c
+
