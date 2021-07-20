@@ -4,7 +4,7 @@ from numpy import inf, sqrt, diag
 from uncertainties.unumpy import uarray
 
 
-def fit(x_values, y_values, function, y_errors=None, guesses=None, ax=False,
+def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
         title=None, x_label=None, y_label=None, pnt_size=3, line_size=3,
         log_scale=None, scientific_notation=None, dpi=200, save_plot=False,
         show_plot=True):
