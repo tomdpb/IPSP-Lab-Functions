@@ -116,10 +116,17 @@ def linear(x, a, b):
 	return a*x + b
 
 
-def exponential(x, a, b, c):
-    return a*exp(x*b + c)
+def exponential(x, a, b, c, d):
+    return a*exp(x*b + c) + d
 
 
 def parabola(x, a, b, c):
     return a*x**2 + b*x + c
 
+
+def main():
+	pass
+
+
+if __name__ == '__main__':
+	main()
