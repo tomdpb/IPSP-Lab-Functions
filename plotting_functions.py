@@ -123,10 +123,3 @@ def exponential(x, a, b, c, d):
 def parabola(x, a, b, c):
     return a*x**2 + b*x + c
 
-
-def main():
-	pass
-
-
-if __name__ == '__main__':
-	main()
