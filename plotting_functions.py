@@ -1,6 +1,6 @@
 from matplotlib import pyplot as plt
 from scipy.optimize import curve_fit
-from numpy import inf, sqrt, diag, ln, exp
+from numpy import inf, sqrt, diag, log, exp
 from uncertainties.unumpy import uarray
 
 
@@ -99,8 +99,8 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
         
 
         if show_plot:
-        	ax.grid(True)
-        	ax.legend()
+            ax.grid(True)
+            ax.legend()
             plt.show()
 
         if save_plot:
@@ -113,7 +113,7 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
 
 
 def linear(x, a, b):
-	return a*x + b
+    return a*x + b
 
 
 def quadratic(x, a, b, c):
@@ -121,7 +121,7 @@ def quadratic(x, a, b, c):
     
 
 def logarithmic(x, a, b):
-	return a*ln(x) + b
+    return a*log(x) + b
 
 
 def exponential(x, a, b, c):
@@ -129,12 +129,12 @@ def exponential(x, a, b, c):
 
 
 def ab_exponential(x, a, b):
-	return a*b**x
-	
+    return a*b**x
+
 
 def power(x, a, b):
-	return a*x**b
+    return a*x**b
 
 
 def inverse(x, a, b):
-	return a/x + b
+    return a/x + b
