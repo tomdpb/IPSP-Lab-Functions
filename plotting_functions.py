@@ -7,7 +7,7 @@ from uncertainties.unumpy import uarray
 def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
         title=None, x_label=None, y_label=None, pnt_size=3, line_size=3,
         log_scale=None, scientific_notation=None, dpi=200, save_plot=False,
-        show_plot=True):
+        ):
     """Curve fit function
     - takes data and fits it to a given function.
     - gives you a plot of your data as scatter points and a curve fit line
@@ -44,9 +44,6 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
                         plot, and therefore its quality.
         save_plot:      opt, bool; if given, saves the figure using the name
                         given by the 'title' variable.
-        show_plot:      opt, bool; if given, shows the plot. Note that if this
-                        function isn't assigned to a variable, some
-                        environments might show the plot regardless.
 
     Returns:
         array of parameters with standard error
@@ -61,7 +58,7 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
     std = sqrt(diag(cov))
     parameters = uarray(pars, std)
 
-    if show_plot or save_plot:
+    if save_plot:
         if not ax:
             plt.figure(tight_layout=True, dpi=dpi)
             ax = plt.axes()
@@ -98,15 +95,14 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
 
         
 
-        if show_plot:
-            ax.grid(True)
-            ax.legend()
-            plt.show()
+        ax.grid(True)
+        ax.legend()
 
         if save_plot:
             file_name = str(title) + ".png"
             plt.savefig(file_name)
 
+        plt.show()
 
     return parameters
 
