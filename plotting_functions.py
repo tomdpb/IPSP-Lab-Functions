@@ -4,10 +4,24 @@ from numpy import inf, sqrt, diag, log, exp
 from uncertainties.unumpy import uarray
 
 
-def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
-        title=None, x_label=None, y_label=None, pnt_size=3, line_size=3,
-        log_scale=None, scientific_notation=None, dpi=200, save_plot=False,
-        ):
+def fit(
+    x_values,
+    y_values,
+    function,
+    *,
+    y_errors=None,
+    guesses=None,
+    ax=False,
+    title=None,
+    x_label=None,
+    y_label=None,
+    pnt_size=3,
+    line_size=3,
+    log_scale=None,
+    scientific_notation=None,
+    dpi=200,
+    save_plot=False,
+):
     """Curve fit function
     - takes data and fits it to a given function.
     - gives you a plot of your data as scatter points and a curve fit line
@@ -52,8 +66,14 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
 
     """
 
-    pars, cov = curve_fit(f=function, xdata=x_values, ydata=y_values,
-                          p0=guesses, sigma=y_errors, bounds=(-inf, inf))
+    pars, cov = curve_fit(
+        f=function,
+        xdata=x_values,
+        ydata=y_values,
+        p0=guesses,
+        sigma=y_errors,
+        bounds=(-inf, inf),
+    )
 
     std = sqrt(diag(cov))
     parameters = uarray(pars, std)
@@ -90,10 +110,10 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
             elif scientific_notation == "both":
                 ax.ticklabel_format(style="sci", axis="both", scilimits=(0, 0))
             else:
-                raise ValueError(f"scientific_notation={scientific_notation} is "
-                                 "not a valid argument")
-
-        
+                raise ValueError(
+                    f"scientific_notation={scientific_notation} is "
+                    "not a valid argument"
+                )
 
         ax.grid(True)
         ax.legend()
@@ -107,30 +127,29 @@ def fit(x_values, y_values, function, *, y_errors=None, guesses=None, ax=False,
     return parameters
 
 
-
 def linear(x, a, b):
-    return a*x + b
+    return a * x + b
 
 
 def quadratic(x, a, b, c):
-    return a*x**2 + b*x + c
-    
+    return a * x**2 + b * x + c
+
 
 def logarithmic(x, a, b):
-    return a*log(x) + b
+    return a * log(x) + b
 
 
 def exponential(x, a, b, c):
-    return a*exp(x*b + c)
+    return a * exp(x * b + c)
 
 
 def ab_exponential(x, a, b):
-    return a*b**x
+    return a * b**x
 
 
 def power(x, a, b):
-    return a*x**b
+    return a * x**b
 
 
 def inverse(x, a, b):
-    return a/x + b
+    return a / x + b
